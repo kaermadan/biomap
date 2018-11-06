@@ -1,0 +1,17 @@
+# Large data files
+*.gff
+*.bed
+*.fasta
+*.fas
+*.bam
+*.gff3
+*.fastq
+*.sam
+#*.o*
+#*.e*
+*.vcf
+*.storable
+*.RData
+*.rda
+*.bak
+*.rds
