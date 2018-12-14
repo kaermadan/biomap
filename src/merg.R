@@ -13,7 +13,7 @@ library(viridis)#put plots together
 require(cowplot)
 
 #updataed 181101
-load('~/PAV/data/count/newData/update181101/10.rc.ase.rda')
+load('~/projects/biomap/data/10.rc.ase.rda')
 #samples that retain T2 (LH156xMo17_I_T2, Mo17xPHG29_L_T2,Mo44xMo17_L_T2,NC230xB73_E_T2)
 #the corresponding T1 are ('bm237','bm278','bm287','bm310')
 #bm252 LH93xB73 root is clustered wrong, removed
@@ -65,6 +65,6 @@ df1$nRC_male =  round(df1$nRC_male,0)
 df1$Tissue = as.character(df1$Tissue)
 head(df1) %>% as.data.frame()
 
-saveRDS(df1, "~/PAV/data/count/newData/update181101/rearrange_merg_ase_nRC181101.rds")
+saveRDS(df1, "~/projects/biomap/data/rearrange_merg_ase_nRC181101.rds")
 
 

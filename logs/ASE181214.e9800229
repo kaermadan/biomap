@@ -1,0 +1,60 @@
+Loading required package: tidyverse
+-- Attaching packages --------------------------------------- tidyverse 1.2.1 --
+<U+221A> ggplot2 2.2.1     <U+221A> purrr   0.2.4
+<U+221A> tibble  1.4.2     <U+221A> dplyr   0.7.4
+<U+221A> tidyr   0.8.0     <U+221A> stringr 1.3.0
+<U+221A> readr   1.1.1     <U+221A> forcats 0.3.0
+-- Conflicts ------------------------------------------ tidyverse_conflicts() --
+x dplyr::filter() masks stats::filter()
+x dplyr::lag()    masks stats::lag()
+Loading required package: reshape2
+
+Attaching package: 'reshape2'
+
+The following object is masked from 'package:tidyr':
+
+    smiths
+
+Loading required package: magrittr
+
+Attaching package: 'magrittr'
+
+The following object is masked from 'package:purrr':
+
+    set_names
+
+The following object is masked from 'package:tidyr':
+
+    extract
+
+Loading required package: RColorBrewer
+Loading required package: ggsci
+
+Attaching package: 'scales'
+
+The following object is masked from 'package:purrr':
+
+    discard
+
+The following object is masked from 'package:readr':
+
+    col_factor
+
+Loading required package: qvalue
+Loading required package: viridisLite
+
+Attaching package: 'viridis'
+
+The following object is masked from 'package:scales':
+
+    viridis_pal
+
+Loading required package: cowplot
+
+Attaching package: 'cowplot'
+
+The following object is masked from 'package:ggplot2':
+
+    ggsave
+
+Loading required package: readxl

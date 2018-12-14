@@ -22,13 +22,14 @@ options(dplyr.width = Inf)
 
 print(paste("Job -- ase_newData_allMale -- begin running!!! on", date()))
 
-ase_new = readRDS('~/PAV/data/count/newData/update181101/rearrange_merg_ase_nRC181101.rds')
+ase_new = readRDS('~/projects/biomap/data/rearrange_merg_ase_nRC181101.rds')
 test1= ase_new %>% filter(ncft/(n0+n1) < 0.1, (n0+n1) >15, (nRC_female+nRC_male) >15, Female !='Q381')
 test= test1
 
 print(paste("Executed dataset row number after filtering is", nrow(test1)))
 ################# Two binom test and one Fisher test#######################################
 ##keep male/female order consistent across binom and Fisher!! especially for p!=0.5
+##181214 when do binom in parents, for endosperm tissue, p should set as 0.5
 
 get_test <- function(test){
 
@@ -48,7 +49,7 @@ get_test <- function(test){
 		} else if ((as.numeric(x[6])/(as.numeric(x[5])+as.numeric(x[4])) < 0.1) & ((as.numeric(x[5])+as.numeric(x[4])) >15) & ((as.numeric(x[8])+as.numeric(x[9])) >15) & x[7] =='Endosperm') {
 			model_binom <- binom.test( x = as.numeric( x[8] ),
                              n = as.numeric( x[8])+as.numeric( x[9] ), 
-                             p = 0.66666666, 
+                             p = 0.5, 
                              alternative = "two.sided", 
                              conf.level = 0.95)
 			return( c(Parent.binom.p = as.numeric(model_binom$p.value))) 
@@ -170,7 +171,7 @@ test_result_f= sample_all %>% mutate(Reg.Cat= case_when(
 
 #write.csv(test_result_f,'/home/hirschc1/lixx5447/PAV/data/count/newData/ase_newData_allMale.csv')
 
-saveRDS(test_result_f, "~/PAV/data/count/newData/update181101/ase_newData181101.rds")
+saveRDS(test_result_f, "~/projects/biomap/data/ase_newData181214.rds")
 ######
 head(test_result_f)
 print('ase_newData_allMale completed!!!,
