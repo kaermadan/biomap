@@ -45,6 +45,9 @@ p1= q12 %>% ggplot(aes(x=Reg.Cat, y=prop, fill=htp))+
             scale_fill_manual(values = dk3)+
             theme_bw() +
             theme(plot.margin = unit(c(.0,.0,.0,0), "lines")) +
+            theme(axis.text.x= element_text( size =10),
+                  axis.text.y= element_text(size=10),
+                  axis.title.y= element_text(size=10))+
             theme(legend.key.size = unit(0.8,'lines'),
                   legend.position = c(0.7,0.94),
                   legend.direction = 'horizontal',
