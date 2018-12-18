@@ -31,18 +31,30 @@ q12$htp<- factor(q12$htp, levels=c("SSSxNSS", "NSSxSSS","IODENTxSSS","SSSxIODENT
 q12$Tissue<- factor(q12$Tissue, levels=c('Endosperm','Leaf','Root','Seedling','Internode'), labels=c('Endosperm','Leaf','Root','Seedling','Internode'))
 
 fp01= file.path(dir, paste('reg.cat.htp.prop.bar','.png', sep=''))
-p1= q12 %>% ggplot(aes(x=Reg.Cat, y=prop, group=htp, fill=htp))+ 
-            geom_bar(stat='identity') + 
-            ggsave(filename = fp01, width=10, height=7)
-
-
-
-
-
-
-
-
-
-
+dk2 = brewer.pal(n = 6, name = "Paired")
+add3= c('gray40','gray60','gray80')
+dk3 = c(dk2, add3)
+give.n <- function(x){
+  return(c(y = median(x)*1.05, label = length(x)))  
+}
+p1= q12 %>% ggplot(aes(x=Reg.Cat, y=prop, fill=htp))+ 
+            #geom_bar(stat='identity',position= position_dodge(width=0.85), width=0.7) +
+            geom_boxplot(notch = F, outlier.size = 0.13, width = .65,lwd=0.12, fatten=1.0, position=position_dodge(width=0.75))+ 
+            scale_x_discrete(name = '', expand=c(0,0.5))+
+            scale_y_continuous(name = 'Proportion (%)',limits = c(0,45), expand = c(0,1.05))+ 
+            scale_fill_manual(values = dk3)+
+            theme_bw() +
+            theme(plot.margin = unit(c(.0,.0,.0,0), "lines")) +
+            theme(legend.key.size = unit(0.8,'lines'),
+                  legend.position = c(0.7,0.94),
+                  legend.direction = 'horizontal',
+                  legend.text = element_text(size=8),
+                  legend.margin = margin(0,0,0,0),
+                  legend.box.margin = margin(0,0,-8,0))+
+            theme(panel.grid.major = element_blank())+
+            guides(fill = guide_legend(title = ''))+
+            stat_summary(fun.data = give.n, geom = "text", fun.y = median,
+                  position = position_dodge(width = 0.75), size = 2.2, vjust= -2.1, hjust=0.5)+ 
+            ggsave(filename = fp01, width=9, height=6)
 
 

@@ -1,2 +1,32 @@
 [1] "Job -- ase_newData_allMale -- begin running!!! on Tue Dec 18 12:50:19 2018"
 [1] "Executed dataset row number after filtering is 2881529"
+  Male Female             gid n1  n0 ncft    Tissue nRC_female nRC_male
+1 Mo17    B73 ENSRNA049458795 13  29    0 Endosperm         15       14
+2 Mo17    B73 ENSRNA049458812 19  38    1 Endosperm         24       26
+3 Mo17    B73 ENSRNA049458826 61 144    2 Endosperm        168      203
+4 Mo17    B73 ENSRNA049458846 12  27    1 Endosperm         15       14
+5 Mo17    B73 ENSRNA049458874  8  19    0 Endosperm         38       39
+6 Mo17    B73 ENSRNA049458957  8  34    2 Endosperm         40       31
+  nRC_hybrid CPM_hybrid  CPM_male CPM_female SampleID Parent.binom.p
+1   23.66143  0.9715240 0.5866757  0.6055796    bm175     1.00000000
+2   29.97114  1.2305970 1.0755721  0.9689274    bm175     0.88772483
+3  277.62740 11.3992144 8.4090185  6.6613759    bm175     0.07739041
+4   18.92914  0.7772192 0.5866757  0.6055796    bm175     1.00000000
+5   56.78742  2.3316575 1.6133582  1.5139491    bm175     1.00000000
+6   26.81628  1.1010605 1.2711307  1.5745070    bm175     0.34247100
+  Hybrid.binom.p    trans.p Parent.binom.qvalue Hybrid.binom.qvalue
+1     0.87031904 1.00000000          0.15661795          0.48879642
+2     1.00000000 1.00000000          0.14134278          0.52815961
+3     0.29995060 0.08591426          0.01441243          0.22090059
+4     0.86549554 1.00000000          0.15661795          0.48733810
+5     0.83888173 0.79436247          0.15661795          0.47731225
+6     0.05038802 0.35129512          0.05884242          0.05014884
+  trans.qvalue   Reg.Cat
+1    1.0000000 Conserved
+2    1.0000000 Conserved
+3    0.1797891 Ambiguous
+4    1.0000000 Conserved
+5    0.9112402 Conserved
+6    0.5259508 Conserved
+[1] "ase_newData_allMale completed!!!,\n\tResults were saved in \"ase_newData_allMale.rds\"\n\t and \"ase_newData_allMale.csv\""
+[1] "Job -- ase_newData_allMale -- Ending!!! on Tue Dec 18 16:07:49 2018"
