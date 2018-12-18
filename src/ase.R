@@ -23,7 +23,7 @@ options(dplyr.width = Inf)
 print(paste("Job -- ase_newData_allMale -- begin running!!! on", date()))
 
 ase_new = readRDS('~/projects/biomap/data/rearrange_merg_ase_nRC181101.rds')
-test1= ase_new %>% filter(ncft/(n0+n1) < 0.1, (n0+n1) >15, (nRC_female+nRC_male) >15, Female !='Q381')
+test1= ase_new %>% filter(ncft/(n0+n1) < 0.1, (n0+n1) >20, (nRC_female+nRC_male) >20, Female !='Q381')
 test= test1
 
 print(paste("Executed dataset row number after filtering is", nrow(test1)))
@@ -171,7 +171,7 @@ test_result_f= sample_all %>% mutate(Reg.Cat= case_when(
 
 #write.csv(test_result_f,'/home/hirschc1/lixx5447/PAV/data/count/newData/ase_newData_allMale.csv')
 
-saveRDS(test_result_f, "~/projects/biomap/data/ase_newData181214.rds")
+saveRDS(test_result_f, "~/projects/biomap/data/ase_newData181218_filter20.rds")
 ######
 head(test_result_f)
 print('ase_newData_allMale completed!!!,
