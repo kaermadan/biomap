@@ -97,21 +97,22 @@ matrix.please <- function(x){
 }
 
 tis = as.character(unique(q12$Tissue))
+cln = unique(q12$Reg.Cat)[c(2,7,3,4,5,6)]
 for ( i in tis ) { 
-	endo = q12 %>% ungroup() %>% filter(Tissue == i ) %>% mutate(Genotype= paste0(Female, 'x', Male)) %>%  select(Genotype, prop, Reg.Cat) %>% spread(., Reg.Cat, prop)
+	endo = q12 %>% ungroup() %>% filter(Tissue == i, Reg.Cat != 'Ambiguous' ) %>% mutate(Genotype= paste0(Female, 'x', Male)) %>%  select(Genotype, prop, Reg.Cat) %>% spread(., Reg.Cat, prop)
 
 	e1 = matrix.please(endo)
 	#mycol = colorRampPalette(brewer.pal(8, "PiYG"))(25)
-	mycol = terrain.colors(14)
+	mycol = terrain.colors(12)
 	range_1<- extendrange(e1, r = range(e1, na.rm = TRUE), f = 0.01)
-	bre=c(seq(range_1[1], range_1[2],length=15))# change length=? to achieve the best effect
-
-	png(filename = paste0(dir, '/heatmap.endosperm.reg.cat_', i, '.png'), height = 6, width = 6, res = 500,units = 'in')
-	p2 = heatmap.2(e1, Rowv = TRUE, Colv = FALSE, col = mycol, 
+        #bre=c(seq(range_1[1], range_1[2],length=15))# change length=? to achieve the best effect
+        bre = c(seq(0,35, length = 13))
+	png(filename = paste0(dir, '/heatmap.endosperm.reg.cat_', i, '.png'), height = 5, width = 4, res = 500,units = 'in')
+	p2 = heatmap.2(e1, Rowv = FALSE, Colv = cln, col = mycol, 
 	  dendrogram = 'none',
-	  key = TRUE, trace = 'none',
-	  margins = c(2,0), 
-	  cexRow = 0.47, cexCol = 0.8,
+	  key = T, trace = 'none',
+	  margins = c(4.6,4.6), 
+	  cexRow = 0.5, cexCol = 0.8,
 	  na.rm = TRUE, na.color = 'gray23',
 	  key.title = i,
 	  key.xlab = '',
@@ -119,11 +120,11 @@ for ( i in tis ) {
 	  symm = F,symkey = F,symbreaks = T,
 	  offsetRow = -0.3, offsetCol = -0.3, 
 	  scale = "none", breaks = bre,
-          keysize=0.3, 
+          keysize=1.6) 
           #( "bottom.margin", "left.margin", "top.margin", "left.margin" )
-          key.par=list(mar=c(3.5,0,3,0)),
+          #key.par=list(mar=c(3.5,0,3,0)),
           # lmat -- added 2 lattice sections (5 and 6) for padding
-          lmat=rbind(c(5, 4, 2), c(6, 1, 3)), lhei=c(2.5, 5), lwid=c(1, 10, 1))
+          #lmat=rbind(c(5, 4, 2), c(6, 1, 3)), lhei=c(2.5, 5), lwid=c(1, 10, 1))
 	 dev.off()
 }
 
