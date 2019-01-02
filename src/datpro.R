@@ -1,21 +1,6 @@
 #!/user/bin/Rscript
 
-source('/home/hirschc1/lixx5447/projects/src/pkgs.R')
-
-dir= '/home/hirschc1/lixx5447/projects/biomap/graph'
-ase= readRDS('/home/hirschc1/lixx5447/projects/biomap/data/ase_newData181214.rds')
-#ase= readRDS('/home/hirschc1/lixx5447/projects/biomap/data/ase_newData181218_filter20.rds')
-ase %<>% as.tibble()
-
-a1= ase %>% group_by(Reg.Cat,Female, Male,Tissue) %>% dplyr::count() 
-a2= a1 %>% ungroup() %>% group_by(Male, Female, Tissue) %>% mutate_at(vars(n), funs(sum=sum)) %>% mutate(prop=n/sum*100) %>% filter(sum> 5000) 
-
-a2 %>% group_by(Reg.Cat) %>% summarise_at(vars(prop), funs(mean, max,min,median,sd))
-deg= c('Cis','Trans','CisxTrans','Cis+Trans')
-
-z2= a2 %>% filter(Reg.Cat %in% deg)
-z2 %>% group_by(Reg.Cat) %>% summarise_at(vars(prop), funs(mean, max,min,median,sd))
-z2 %>% group_by(Reg.Cat, Tissue) %>% summarise_at(vars(prop), funs(mean, max,min,median,sd))
+source('/home/hirschc1/lixx5447/projects/src/df.R')
 
 #heterotic
 ht = read_excel('/panfs/roc/groups/14/hirschc1/lixx5447/PAV/graph/paper/heterotic_group.xlsx')
@@ -106,10 +91,10 @@ for ( i in tis ) {
 	mycol = terrain.colors(12)
 	range_1<- extendrange(e1, r = range(e1, na.rm = TRUE), f = 0.01)
         #bre=c(seq(range_1[1], range_1[2],length=15))# change length=? to achieve the best effect
-        bre = c(seq(0,35, length = 13))
+        bre = c(seq(0,40, length = 13))
 	png(filename = paste0(dir, '/heatmap.endosperm.reg.cat_', i, '.png'), height = 5, width = 4, res = 500,units = 'in')
-	p2 = heatmap.2(e1, Rowv = FALSE, Colv = cln, col = mycol, 
-	  dendrogram = 'none',
+	p2 = heatmap.2(e1, Rowv = TRUE, Colv = cln, col = mycol, 
+	  dendrogram = 'row',
 	  key = T, trace = 'none',
 	  margins = c(4.6,4.6), 
 	  cexRow = 0.5, cexCol = 0.8,
@@ -127,5 +112,6 @@ for ( i in tis ) {
           #lmat=rbind(c(5, 4, 2), c(6, 1, 3)), lhei=c(2.5, 5), lwid=c(1, 10, 1))
 	 dev.off()
 }
+
 
 
