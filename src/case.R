@@ -1,5 +1,6 @@
 #!/user/bin/Rscript
 source('/home/hirschc1/lixx5447/projects/biomap/src/df.R')
+#Tissue specific
 #demo
 b7= ase %>% filter(Male=='B73')
 mo= b7 %>% filter(Female=='Mo17')
@@ -218,8 +219,6 @@ p01 = cbd.tem %>% filter( n >= 20) %>% filter( Reg.Cat != 'Ambiguous') %>% ggplo
     geom_vline(xintercept = c(1.5,2.5,3.5,4.5, 5.5), linetype= 'dashed',color = 'gray38', size = 0.1)+
         ggsave(filename = fp01,width = 4.5, height = 6)
 
-
-
 ###Genotype specific
 #demo
 leaf = ase2 %>% filter(Tissue == 'Leaf')
@@ -249,7 +248,65 @@ for (i in tis){
 }
 geo %<>% mutate(pro = prop*0.01)
 
-#plot genotype specific
+#sig test
+tis = unique(geo$Tissue)
+reg = unique(geo$Reg.Cat)
+gsig<- NULL
+for (i in tis){
+        for (j in reg){
+                cb1 = geo %>% filter(type != 'shared20-80', pro >0) %>% filter(Tissue == i, Reg.Cat == j)
+                model = betareg(pro ~ type, data = cb1)
+                joint_tests(model)
+                marginal = emmeans(model,
+                                   ~ type)
+                cmp = pairs(marginal,
+                      adjust="tukey")
+                Sum = CLD(marginal,
+                          alpha   = 0.05,
+                          Letters = letters,         ###  Use lowercase letters for .group
+                          adjust  = "tukey")         ###  Tukey-adjusted comparisons
+                cmp %<>% data.frame(.) %>% mutate(Tissue = i, Reg.Cat = j)
+                gsig = rbind(gsig, cmp)
+        }
+}
+gsig %<>% select(-contrast, -df) %>% arrange(p.value) %>% select(Reg.Cat, Tissue, p.value, estimate:z.ratio)
+gsig
+
+#plot genotype constitutive and genotype specific
+geo28 = geo %>% filter(type != 'shared20-80') 
+geo28$type <- factor(geo28$type, levels = c('shared80', 'shared20'),  c('Genotype Constitutive', 'Genotype Specific')) 
+fp01 = file.path(dir, paste0('genotype.constitutive-specific.reg.cat.box','.png'))
+p01 = geo28 %>% filter( Reg.Cat != 'Ambiguous') %>% ggplot(aes(x = Reg.Cat, y = prop, fill = type))+
+        geom_boxplot(notch=F, outlier.size = 0.080, width = 0.5, position = position_dodge(0.8), lwd = 0.1, fatten = 3) +
+    facet_wrap(~Tissue, ncol=1)+
+    scale_x_discrete( name ='', expand = c(0,.5)) +
+    scale_y_continuous(name = 'Proportion (%)', expand = c(0,1.05)) +
+    scale_color_brewer(palette = 'Paired') +
+    #coord_flip() +
+    theme_bw() +
+    #labs(x= '', y='No. of PAV Genes')+
+    theme(plot.margin = unit(c(.0,.1,.0,0), "lines")) +
+    theme(axis.text.x= element_text(angle=45, size = 10, hjust = 1),
+          axis.text.y= element_text(size=10),
+          axis.title.y = element_text(size =10),
+           axis.title.x = element_text(size =10))+
+    theme(#legend.justification=c(0.1,0.05),
+           legend.position='top',
+           legend.text=element_text(size=8),
+           legend.direction = 'horizontal',
+           legend.key.size=unit(0.7,'lines'),
+           legend.margin = margin(0,0,0,0),
+           legend.box.margin= margin(0,0,-8,0))+
+    theme(strip.background = element_rect(colour = 'gray88', fill = 'gray88', size=0.45),
+          strip.text.x = element_text(size=9, color='black', margin = margin(0.13,0,0.13,0, "cm")))+
+    theme(panel.grid.major.x =  element_blank())+
+    stat_summary(fun.data = give.n, geom = "text", fun.y = median,
+                  position = position_dodge(width = 0.75), size = 2,vjust= -2.47, hjust=0.5)+
+    guides(fill=guide_legend(title="",nrow=1))+
+    geom_vline(xintercept = c(1.5,2.5,3.5,4.5, 5.5), linetype= 'dashed',color = 'gray38', size = 0.1)+
+    ggsave(filename = fp01,width = 4, height=6.0)
+
+#plot genotype specific all together
 geo$type <- factor(geo$type, levels = c('Genotype Specific', 'Intermedia Frequency','Genotype Constitutive'), labels = c('shared20', 'shared20-80', 'shared80'))
 dk2 = brewer.pal(n =8, name ='Greys')
 dk2 = dk2[4:8]
@@ -283,7 +340,7 @@ p01 = geo %>% filter( Reg.Cat != 'Ambiguous') %>% ggplot(aes(x = Reg.Cat, y = pr
      #             position = position_dodge(width = 0.75), size = 2,vjust= -2.47, hjust=0.5)+
     guides(fill=guide_legend(title="",nrow=1))+
     geom_vline(xintercept = c(1.5,2.5,3.5,4.5, 5.5), linetype= 'dashed',color = 'gray38', size = 0.1)+
-        ggsave(filename = fp01,width = 4.5, height=6.50)
+    ggsave(filename = fp01,width = 4.5, height=6.50)
 
 #filter out n< 20 samples
 geo20 = geo %>% filter(n >= 20)
@@ -318,7 +375,7 @@ p01 = geo20 %>% filter( Reg.Cat != 'Ambiguous') %>% ggplot(aes(x = Reg.Cat, y = 
      #             position = position_dodge(width = 0.75), size = 2,vjust= -2.47, hjust=0.5)+
     guides(fill=guide_legend(title="",nrow=1))+
     geom_vline(xintercept = c(1.5,2.5,3.5,4.5, 5.5), linetype= 'dashed',color = 'gray38', size = 0.1)+
-        ggsave(filename = fp01,width = 4.5, height=6.50)
+    ggsave(filename = fp01,width = 4.5, height=6.50)
 
 
 

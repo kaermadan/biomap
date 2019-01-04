@@ -4,7 +4,8 @@ look at how many genes with ase data are shared across tissue in single triplet
 #next
 how about across different triplet?
 #tissue specific
-For 32 triplets, 9143-18973 genes are covered by SNPs and can be xxx five tissues. Among them, xxx-xxx genes are spcificlly expressed in only one tissue, and xxx-xxx genes are constitutively expressed in all five tissue
+#just to make clear:
+For 32 triplets that have data for all five tissue, regulatory divergence analysis can be conducted for 9143-18973 genes which are covered by SNP markers. For each tissue of each triplet, the total number of genes in it can be first divided into five types: shared5-shared1, Among them, 169-2574 genes are spcificlly expressed in only one tissue, and 3748-9634 genes are constitutively expressed in all five tissues. Then for each type, it can be further classified into 7 regulatory categories: Cis, Trans....
 cbd.tem %>% group_by(type) %>% summarise_at(vars(sum),funs(max,min,mean,sd))
 # A tibble: 5 x 5
   type      max   min  mean    sd
