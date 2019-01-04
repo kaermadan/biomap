@@ -20,3 +20,9 @@ cbd.tem %>% group_by(type) %>% summarise_at(vars(sum),funs(max,min,mean,sd))
 #Genotype specific
 for leaf tissue, in total, there are 22886 genes with SNP across 43 triplets. Among them, 2954 genes are expressed in over 80% of the genotypes (35): 1077-2855 genes in different genotypes. `gsc80 %>% group_by(id) %>% count()`
 Such genes in each genotype can be further classified into seven regulatory categories: Cis, Trans..., plot can be made from the distribution of numbers and proportions of them genes in each triplet in each tissue.
+
+#ideas
+- Look at known genes in our dataset, like tb1, ZmCCT, ZCN8, gt1, etc., to check if they 
+  have the same regulation pattern as here.
+- Look at regulation pattern of homeolog gene pairs, see [this paper](/https://onlinelibrary.wiley.com/doi/epdf/10.1111/tpj.14228)
+
